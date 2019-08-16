@@ -17,7 +17,7 @@
 
 <body>
     <div class="container">
-        <h2>AJAX Lab Jessie</h2>
+        <h2>AJAX Lab </h2>
         <ul class="nav nav-tabs">
             <li class="active"><a href="#conceptTab">Concept</a></li>
             <li><a href="#getTab">GET</a></li>
@@ -61,21 +61,24 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="nameTextBox">Your name:</label>
                         <div class="col-md-4">
-                            <input name="nameTextBox" id="nameTextBox" type="text" class="form-control input-md">
+                            <input name="nameTextBox" id="nameTextBox" 
+                            v-model="userName" type="text" class="form-control input-md">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="otherTextBox">Other data:</label>
                         <div class="col-md-4">
-                            <input name="otherTextBox" id="otherTextBox" type="text" class="form-control input-md">
+                            <input name="otherTextBox" id="otherTextBox" 
+                             type="text" class="form-control input-md">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="button1id"></label>
                         <div class="col-md-8">
-                            <button type="button" id="getButton" name="getButton" class="btn btn-success">Hello -- $.get()</button> &nbsp;
-                            <span id='reportSpan'></span>
+                            <button type="button" id="getButton" name="getButton" class="btn btn-success" v-on:click="getButtonClick" >Hello -- $.get()</button> &nbsp;                       
+                            <span id='reportSpan' >hello {{ helloUserName }}</span>
+                            
                         </div>
                     </div>
                 </form>
@@ -122,51 +125,68 @@
     <script type='text/javascript' src='js/ajax_concept.js'></script>
 
     <script>
-        
         $(document).ready(function() {
             $(".nav-tabs a").click(function() {
                 $(this).tab('show');
             });
+
+
             $("#getButton").on("click", function() {
                 var s = $("#nameTextBox").val();
-                $("#reportSpan").text(s);
-            })
-            $("#postButton").on("click", function() {
-                var dataToServer = {
-                    firstName: $("#firstNameTextBox").val(),
-                    lastName: $("#lastNameTextBox").val()
-                }
-                $("#resultSpan").text(JSON.stringify(dataToServer));
-            })
-        });
 
-        var appPost = new Vue({
-                el: "#postTab",
+                $.get("/hello/" + s, function(e) {
+                    $("#reportSpan").text(e);
+                })
+
+            })
+
+            
+
+            var appGet = new Vue({
+                el: "#getTab",
                 data:{
-                    firstName: "jessie",
-                    lastName: "lin",
-                    fullName: "jessielin"
+                    userName: "a",
+                    helloUserName: "b"
                 },
                 methods:{
-                    postButtonClick: function(){
-                        var dataToServer = {
-                            firstName: this.firstName,
-                            lastName: this.lastName
-                        }
-                        var appPost_this = this;
-                        $.ajax({
-                          type: "post",
-                          url: "/test",
-                          data: dataToServer
-                        }).then(function(e){
-                            appPost_this.fillName = e + "-- ver 2.0";
-                        }) 
-                    //    this.fullName = JSON.stringify(dataToServer);
+                    getButtonClick: function(){
+                        var _this = this; // appGet的funtion內部
+                        $.get("/hello/" + this.userName, function(e){
+                            // alert(OK);    
+                            _this.helloUserName = e;
+                            console.log(this); // jquery $函式
+
+                        })
+                        // this.helloUserName = "Hello" + Date();
+                        // alert(this.userName);
                     }
                 }
-        });
 
-         var appPost = new Vue({
+            });
+
+
+            // $("#postButton").on("click", function() {
+            //     var dataToServer = {
+            //         firstName: $("#firstNameTextBox").val(),
+            //         lastName: $("#lastNameTextBox").val()
+            //     }
+            //     // $.post("/test", dataToServer,
+            //     //     function(e) {
+            //     //         $("#resultSpan").text(e);
+            //     //     }
+            //     // )
+
+            //     $.ajax({
+            //     type: "post",
+            //     url: "/test",
+            //     contentType: "application/json",        
+            //     data: JSON.stringify(dataToServer)
+            //     }).then(function(e){
+            //     $("#resultSpan").text(e);
+            //     })
+            // })
+
+            var appPost = new Vue({
                 el: "#postTab",
                 data:{
                     firstName: "jessie",
