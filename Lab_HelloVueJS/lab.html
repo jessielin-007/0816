@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab</title>
+    <style>
+        body>div {
+            font-family: sans-serif;
+            font-size: 1.25em;
+            border: 1px solid gray;
+            padding: 20px;
+            margin: 20px;
+        }
+    </style>
+ <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app1">
+    <input type="text" v-model="message"> <br>
+    {{ message }} <br>
+    <button v-on:click="reverseMessage">Reverse Message</button>
+    <!-- <button v-on:mouseleave="reverseMessage">Reverse Message</button> -->
+</div>
+
+<div id="app2">
+    <span v-bind:title="message"> 
+        <!-- 把message抄至Html的title -->
+        請將滑鼠移到本段文字上方
+    </span>
+</div>
+
+<div id="app3">
+    <span v-if="see">Now you can see me</span>
+</div>
+
+<div id="app4">
+    <ul>
+        <li v-for="Item in List">
+            {{ Item.text }}
+        </li>
+    </ul>
+</div>
+
+<div id="app44">
+    <ol>
+        <li v-for="todoItem in todoList">
+            <!-- A -->
+            {{ todoItem.text }}
+        </li>
+    </ol>
+
+</div>
+
+<script>
+// --- javaScript ---
+// var obj = new Object();
+// obj.firstName= "Jessie";
+// obj.sayHello = function(){
+
+// }
+
+// 單向繫節: 資料(date)流向畫面(div{{}})
+// 建立一個Vue持續監聽data, data有改變會抄給屬性{{}}
+var app111 = new Vue({
+    el: "#app1", //element
+    data: {
+        message: 'Hello Vue.js'
+    },
+    methods:{
+        reverseMessage: function(){
+            // this => var api111
+            this.message = this.message.split("").reverse().join("");
+        }
+    }
+});
+
+var app222 = new Vue({
+    el: "#app2",
+    data: {
+        //message: 'Hello'
+        message: '載入時間: ' + new Date().toLocaleString()
+        }
+    });
+
+var app333 = new Vue({
+    el: "#app3",
+    data: {
+        see: true
+    }
+});
+
+var app444 = new Vue({
+    el: "#app4",
+    data: {
+        List:[
+            { text: "Job A" },
+            { text: "Job B" },
+            { text: "Job C" }
+        ]
+    }
+});
+// app444.List.push({ text: 'JobE' }) 
+
+var app4444 = new Vue({
+    el: "#app44",
+    data: {
+        todoList:[
+            { text: "JobAAA" },
+            { text: "JobBBB" },
+            { text: "JobCCC" },
+        ]
+    }
+});
+
+
+
+</script>
+</body>
+</html>
