@@ -37,6 +37,7 @@ console.log("「Ctrl + C」可結束伺服器程式.");
 var mysql = require('mysql');
 var connection = mysql.createConnection({
 	host : '127.0.0.1',
+	// host : '10.0.105.88',
 	user : 'root',
 	password : '',
 	database : 'labDB'
