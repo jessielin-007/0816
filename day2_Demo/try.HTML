@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+<div id="lab">
+    First Name: <input type="text" v-model="firstName"> <br>
+    Last Name: <input type="text" v-model="lastName"><br>
+    Full Name: {{fullName}} (Ver -- compute, watch)<br>
+    Last update: {{ lastUpdate }}
+
+</div>
+
+
+<script>
+    var labApp = new Vue({
+        el: "#lab",
+        data: {
+            firstName: "111",
+            lastName: "222",
+            //fullName: "ABC",
+            lastUpdate: ""
+        },
+        // watch: {
+        // // watch用於較複雜的情況 EX.網路來回
+        //     firstName: function (){
+        //         //當firstname有改變,就會改fullName
+        //         this.fullName = this.firstName+ " " + this.lastName;     
+        //     },
+        //     lastName: function (){
+        //         this.fullName= this.firstName+ " " + this.lastName;
+        //     }
+        // },
+
+        computed: {
+            fullName: function(){
+                return this.firstName+ " " +this.lastName;
+            }
+            },
+        watch: {
+            //事件改變, 程式處理一遍
+            fullName: function (){
+                this.lastUpdate = Date();
+            }
+        }
+        
+        
+        // computed: {
+        //用於簡單計算
+        //     fullName: function (){
+        //         return this.firstName+ " " +this.lastName;
+        //     }
+        //}
+    });
+
+
+
+</script>
+
+</body>
+</html>
