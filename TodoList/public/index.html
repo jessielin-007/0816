@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+        <head>
+                <meta charset="UTF-8">
+                <title>TodoList</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <link href="css/bootstrap.min.css" rel="stylesheet">
+                <link rel="stylesheet" href="css/jquery.toast.css">
+                <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+            </head>
+  <body>
+    <div class="container">
+    <div class="row">
+      <div class="col-sm-4" id="root">
+        <h2>Todo: <span class="pull-right">
+        <button id="newItem" v-on:click="handleSubmit" class="btn btn-success btn-sm">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></span></h2>
+        <input v-model="work"/>
+        <div>{{work}}</div>
+        <ul>
+            <todo-item v-for="(item,index) in list"
+            v-bind:key="index"
+            v-bind:content="item"
+            v-bind:index="index"
+            v-on:delete="handleDelete"
+            >
+            </todo-item>            
+        </ul>
+      </div>
+
+      <script>
+        
+        Vue.component('todo-item',{
+            
+            props: ['content','index'],
+            template: '<li v-on:click="handleClick">{{content}}</li>',
+            methods: {
+                handleClick: function() {
+                    
+                    this.$emit('delete', this.index)
+                }
+            }
+        })
+        var newsApp = new Vue({
+            el: "#root",
+            data: {
+                work: '',
+                list: [
+                { id: '1', work: 'A' },
+                { id: '2', work: 'B' },
+                { id: '3', work: 'C' }
+                    ]
+            },
+            methods: {
+                handleSubmit: function() {
+                     this.list.push(this.work)
+                     this.work = ''
+                },
+                handleDelete: function(index) {
+                    this.list.splice(index,1)
+                }
+            }
+        })
+      </script>
+  </body>
+</html>
