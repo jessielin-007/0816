@@ -11,12 +11,12 @@
   <body>
     <div class="container">
     <div class="row">
-      <div class="col-sm-4" id="root">
-        <h2>Todo: <span class="pull-right">
-        <button id="newItem" v-on:click="handleSubmit" class="btn btn-success btn-sm">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></span></h2>
+      <div class="col-sm-4" id="app">
+        <h2>Todo:<span class="pull-right"></h2>
         <input v-model="work"/>
-        <div>{{work}}</div>
+        <button id="newItem" v-on:click="handleSubmit" class="btn btn-success btn-sm">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></span>
+        <div>{{work}}</div><br>
         <ul>
             <todo-item v-for="(item,index) in list"
             v-bind:key="index"
@@ -33,22 +33,28 @@
         Vue.component('todo-item',{
             
             props: ['content','index'],
-            template: '<li v-on:click="handleClick">{{content}}</li>',
+            template:`    
+            <ul class="list-group">
+                <button class="btn btn-danger btn-xs deleteItem" v-on:click="handleClick">
+                    <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                </button>
+                {{content}}
+            </ul>
+            `,
             methods: {
                 handleClick: function() {
-                    
                     this.$emit('delete', this.index)
                 }
             }
         })
         var newsApp = new Vue({
-            el: "#root",
+            el: "#app",
             data: {
                 work: '',
                 list: [
-                { id: '1', work: 'A' },
-                { id: '2', work: 'B' },
-                { id: '3', work: 'C' }
+                'work A',
+                'work B',
+                'work C'
                     ]
             },
             methods: {
