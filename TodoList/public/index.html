@@ -57,6 +57,7 @@
         var newsApp = new Vue({
             el: "#app",
             data: {
+                item: '111',
                 work: '',
                 newsIndex: 0,
                 list: [
@@ -74,6 +75,7 @@
                     this.list.splice(index,1)
                 },
                 handleEditt: function(index) {
+                    
                     newsApp.list[this.newsIndex].item = this.item;
                     // newsApp.newsList[this.newsIndex].title = this.title;
                     // newsApp.newsList[this.newsIndex].ymd = this.ymd;
