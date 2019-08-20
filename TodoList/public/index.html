@@ -15,35 +15,42 @@
       <div class="col-sm-4" id="app">
         <h2>TodoList<span class="pull-right"></h2>
         <input v-model="work"/>
-        <button id="newItem" v-on:click="handleSubmit" class="btn btn-success btn-sm">
+        <button v-on:click="handleSubmit" class="btn btn-success btn-sm">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></span>
         <div>{{work}}</div><br>
+
         <ul>
             <todo-item v-for="(item,index) in list"
             v-bind:key="index"
             v-bind:content="item"
             v-bind:index="index"
             v-on:delete="handleDelete"
+            v-on:edit="handleEditt"
             >
             </todo-item>            
         </ul>
       </div>
 
       <script>
-        Vue.component('todo-item',{
-            
+        Vue.component('todo-item',{    
             props: ['content','index'],
             template:`    
             <ul class="list-group">
-                <button class="btn btn-danger btn-xs deleteItem" v-on:click="handleClick">
-                    <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-                </button>
+                <button class="btn btn-info btn-xs editItem" v-on:click="handleEdit">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                    </button>&nbsp;
+                    <button class="btn btn-danger btn-xs deleteItem" v-on:click="handleClick">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </button>
                 {{content}}
             </ul>
             `,
             methods: {
                 handleClick: function() {
                     this.$emit('delete', this.index)
+                },
+                handleEdit: function() {
+                    this.$emit('edit', this.index)
                 }
             }
         })
@@ -51,6 +58,7 @@
             el: "#app",
             data: {
                 work: '',
+                newsIndex: 0,
                 list: [
                 'work A',
                 'work B',
@@ -64,7 +72,13 @@
                 },
                 handleDelete: function(index) {
                     this.list.splice(index,1)
+                },
+                handleEditt: function(index) {
+                    
+                    // newsApp.newsList[this.newsIndex].title = this.title;
+                    // newsApp.newsList[this.newsIndex].ymd = this.ymd;
                 }
+
             }
         })
       </script>
