@@ -60,9 +60,9 @@
                 work: '',
                 newsIndex: 0,
                 list: [
-                'work A',
-                'work B',
-                'work C'
+                {item: "work A"},
+                {item: "work B"},
+                {item: "work C"},
                     ]
             },
             methods: {
@@ -74,7 +74,7 @@
                     this.list.splice(index,1)
                 },
                 handleEditt: function(index) {
-                    
+                    newsApp.list[this.newsIndex].item = this.item;
                     // newsApp.newsList[this.newsIndex].title = this.title;
                     // newsApp.newsList[this.newsIndex].ymd = this.ymd;
                 }
